@@ -8,4 +8,5 @@
 For import database:
 
 1. Run `vagrant ssh`
-2. Run (use WP-CLi) 'wp db import dbname'
+2. Run `cd /var/www/html`
+3. Run (use WP-CLi) 'wp db import dbname'
