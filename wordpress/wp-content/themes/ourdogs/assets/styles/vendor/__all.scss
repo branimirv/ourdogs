@@ -1,0 +1,16 @@
+@import "~normalize.css/normalize";
+@import "~modularscale-sass/stylesheets/_modularscale";
+@import "~sass-rem/_rem";
+@import "~sass-mq/_mq";
+
+$slick-loader-path: "~slick-carousel/slick/" !default;
+$slick-font-path: "~slick-carousel/slick/fonts/" !default;
+$slick-font-family: "~slick-carousel/slick/" !default;
+
+@import "~slick-carousel/slick/slick.scss";
+@import "~slick-carousel/slick/slick-theme.scss";
+
+@import "~selectric/public/selectric.css";
+
+// lost-grid configuration
+@lost rounder 100;

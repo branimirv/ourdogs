@@ -1,0 +1,9 @@
+.filter {
+    margin-bottom: calc(#{$unit} * 12);
+
+    form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

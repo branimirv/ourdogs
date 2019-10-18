@@ -1,0 +1,9 @@
+@lost flexbox flex;
+
+.grid {
+    lost-center: 100%;
+
+    &--3 {
+        lost-column: 1/3;
+    }
+}

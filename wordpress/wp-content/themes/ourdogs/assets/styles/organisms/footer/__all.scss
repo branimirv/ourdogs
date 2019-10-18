@@ -1,0 +1,11 @@
+.footer {
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    a {
+        font-size: $type-xsmall;
+        line-height: 1.5;
+    }
+}
