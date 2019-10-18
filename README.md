@@ -4,3 +4,8 @@
 2. Run `vagrant up`.
 3. Run `npm install`
 4. Run `npm run start`
+
+For import database:
+
+1. Run `vagrant ssh`
+2. Run (use WP-CLi) 'wp db import dbname'
