@@ -1,3 +1,33 @@
 .hero {
     margin-bottom: calc(#{$unit} * 12);
+
+    &--dogs-all {
+        .hero__image {
+            .image-container {
+                align-items: flex-start;
+                padding-top: 48px;
+            }
+        }
+    }
+
+    &__image {
+        @include aspect-ratio(80, 31);
+
+        .image-container {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__text {
+        max-width: 550px;
+        width: 100%;
+
+        h1 {
+            font-size: $type-xxxlarge;
+        }
+    }
 }

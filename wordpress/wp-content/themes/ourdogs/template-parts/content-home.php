@@ -14,14 +14,16 @@
   <?php $thumbHero = get_the_post_thumbnail_url( $post, 'extra-large'); ?>
 
     <div class="hero hero--home">
-        <div class="container">
-          <div class="hero__text">
-            <?php the_content(); ?>
+      <div class="hero__image">
+          <div class="image-container" style="background-image: url('<?php echo $thumbHero; ?>')">
+            <div class="container">
+              <div class="hero__text">
+                <?php the_content(); ?>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="hero__image">
-          <div class="image-container" style="background-image: url('<?php echo $thumbHero; ?>')"></div>
-        </div>
+      </div>
+        
     </div>
 
 <?php endwhile; endif; ?>

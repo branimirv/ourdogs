@@ -1,4 +1,5 @@
 .dogs {
+    margin-bottom: calc(#{$unit} * 12);
     &__item {
         margin-bottom: calc(#{$unit} * 12);
     }
