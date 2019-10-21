@@ -29,16 +29,27 @@
 
 <?php
 
-    $args = array(
+    $argsAllDogs = array(
         'post_type'         => 'dog',
-        'post_per_page'     => -1,
+        'orderby' => 'meta_value_num',
+        'order'	=> 'ASC',
+        'meta_type' => 'DATE',
+        'meta_key' => 'dog_birth_date',
+        'offset'=> 1,
+    );
+
+    $argsBirthdayBoy = array(
+        'post_type'         => 'dog',
+        'posts_per_page'     => 1,
         'orderby' => 'meta_value_num',
         'order'	=> 'ASC',
         'meta_type' => 'DATE',
         'meta_key' => 'dog_birth_date'
     );
 
-    $query = new WP_Query($args);
+    $queryAllDogs = new WP_Query($argsAllDogs);
+
+    $queryBirthdayGuy = new WP_Query($argsBirthdayBoy);
 ?>
 <div class="filter">
     <div class="container">
@@ -66,9 +77,9 @@
 
 <div class="dogs dogs--all">
     <div class="container">
-        <?php if( $query->have_posts() ) : ?>
-            <div class="grid grid--dogs-all">
-                <?php while( $query->have_posts() ) : $query->the_post(); ?> 
+        <div class="grid grid--dogs-all">
+                <?php if( $queryBirthdayGuy->have_posts() ) : ?>
+                <?php while( $queryBirthdayGuy->have_posts() ) : $queryBirthdayGuy->the_post(); ?> 
                     <div class="grid--3 dogs__item">
                         <div class="card card--oldest">
                             <?php $dogImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'small'); ?>
@@ -111,9 +122,55 @@
                         </div>
                     </div>
                 <?php endwhile;?>
+                <?php wp_reset_postdata(); ?>
+                <?php endif; ?>
+                <?php if( $queryAllDogs->have_posts() ) : ?>
+                <?php while( $queryAllDogs->have_posts() ) : $queryAllDogs->the_post(); ?> 
+                    <div class="grid--3 dogs__item">
+                        <div class="card">
+                            <?php $dogImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'small'); ?>
+                            <div class="card__image">
+                                <div class="image-container" style="background-image: url('<?php echo $dogImage[0]; ?>')"></div>
+                            </div>
+                            <div class="card__info">
+                                <h4>
+                                    <?php the_title(); ?>
+                                </h4>
+                                <div class="card__item">
+                                    <p class="card__label">Birth Date</p>
+                                    <p><?php the_field('dog_birth_date'); ?></p>
+                                </div>
+                                <div class="card__item">
+                                    <p class="card__label">Owners Name</p>
+                                    <p><?php the_field('dog_owners_name'); ?></p>
+                                </div>
+                                <div class="card__item">
+                                    <p class="card__label">Favorite food</p>
+                                    <p><?php the_field('favorite_food'); ?></p>
+                                </div>
+                                <div class="card__item">
+                                    <p class="card__label">Favorite toy</p>
+                                    <p><?php the_field('favorite_toy'); ?></p> 
+                                </div>
+                                <div class="card__item">
+                                    <p class="card__label">Allergies</p>
+                                    <?php if( get_field('food_allergies') ): ?>
+                                        <p><?php the_field('food_allergies'); ?></p> 
+                                    <?php else : ?>
+                                        <p>-</p>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="card__item">
+                                    <p class="card__label">Breed</p>
+                                    <?php the_terms( $post->ID, 'breed', ' ', ' / ' ); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile;?>
+                <?php wp_reset_postdata(); ?>
+                <?php endif; ?>
             </div>
-        <?php endif; ?>
-        <?php wp_reset_postdata(); ?>
     </div>
 </div>
 
