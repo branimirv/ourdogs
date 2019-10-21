@@ -11,3 +11,5 @@ For import database:
 1. Run `vagrant ssh`
 2. Run `cd /var/www/html`
 3. Run (use WP-CLi) 'wp db import dbname'
+
+Download uploads folder: https://www.dropbox.com/s/3f6iwxln8bq9c2z/uploads.zip?dl=0
