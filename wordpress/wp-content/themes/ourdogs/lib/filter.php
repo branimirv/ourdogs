@@ -1,88 +1,72 @@
-<?php 
+<?php
 
 function filter_dogs () {
     $allergies = $_POST['allergies'];
     $breed = $_POST['breed'];
 
-    // for taxonomies / categories
-	if( isset( $_POST['breed'] ) )
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'breed',
-                'field' => $term->term_id,
-                'terms' => $_POST['breed']
-            )
-        );
-
-    // if allergies is set
-	if( isset( $_POST['allergies'] ) && $_POST['allergies'] == 'on' )
-        $args['meta_query'][] = array(
-            'key' => 'food_allergies',
-            'value'   => '',
-            'compare' => '!='
-        );
-
-    // if( $allergies == 'on' && !isset($breed)  )
-    //     $args = array(
-    //         'post_type' => 'dog',
-    //         'post_per_page' => -1,
-    //         'orderby' => 'meta_value_num',
-    //         'order'	=> 'ASC',
-    //         'meta_type' => 'DATE',
-    //         'meta_key' => 'dog_birth_date',
-    //         'meta_query' => array(
-    //             'key' => 'food_allergies',
-    //             'value'   => '',
-    //             'compare' => '!='
-    //         )
-    //     );
+    $breed_tax_args = [];
+    $allergies_meta_args = [];
     
-    // if( $allergies == '' && !$isset($breed)  )
-    //     return $args;
-    
-    // if( $allergies == 'on' && isset($breed) )
-    //     $args = array(
-    //         'post_type' => 'dog',
-    //         'post_per_page' => -1,
-    //         'orderby' => 'meta_value_num',
-    //         'order'	=> 'ASC',
-    //         'meta_type' => 'DATE',
-    //         'meta_key' => 'dog_birth_date',
-    //         'meta_query' => array(
-    //             'key' => 'food_allergies',
-    //             'value'   => '',
-    //             'compare' => '!='
-    //         ),
-    //         'tax_query' => array(
-    //             array(
-    //                 'taxonomy' => 'breed',
-    //                 'field' => 'id',
-    //                 'terms' => $_POST['breed']
-    //             )
-    //         )
-    //     );
+    switch ($breed) {
+        case $breed:
+            $breed_tax_args = [
+                array(
+                    array(
+                        'taxonomy' => 'breed',
+                        'field' => 'id',
+                        'terms' => $_POST['breed']
+                    )
+            
+                )
+            ];
+            
+            break;
 
-    
-    // if( $allergies == '' && isset($breed) )
-    // $args = array(
-    //     'post_type' => 'dog',
-    //     'post_per_page' => -1,
-    //     'orderby' => 'meta_value_num',
-    //     'order'	=> 'ASC',
-    //     'meta_type' => 'DATE',
-    //     'meta_key' => 'dog_birth_date',
-    //     'meta_query' => array(
-    //         'key' => 'food_allergies',
-    //         'value'   => '',
-    //         'compare' => '='
-    //     )
+        case 0:
+            $breed_tax_args = [
+                array(
+                    array(
+                        'taxonomy' => 'breed',
+                    )
+                )
+            ];
 
-    // );
+            break;
+    }
+
+    switch ($allergies) {
+        case 'on':
+            $allergies_meta_args = [
+                array(
+                    'key' => 'food_allergies',
+                    'value'   => '',
+                    'compare' => '!='
+                )
+            ];
+
+            break;
+        case 0:
+            $allergies_meta_args = [
+                array(
+                    'key' => 'food_allergies',
+                    'value'   => '',
+                    'compare' => '='
+                )
+            ];
+
+            break;
+    }
+    
+
+    $args = array(
+        'post_type' => 'dog',
+        'tax_query' => $breed_tax_args,
+        'meta_query' => $allergies_meta_args,
+    );
 
     $query = new WP_Query( $args );
 
     if( $query->have_posts() ) :
-        $count = 0;
         while( $query->have_posts() ): $query->the_post();
             get_template_part('template-parts/all-dogs/card');
 		endwhile;
