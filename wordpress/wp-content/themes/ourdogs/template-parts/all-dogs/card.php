@@ -1,5 +1,5 @@
 <div class="grid--3 dogs__item">
-    <div class="card card--oldest">
+    <div class="card">
         <?php $dogImage = wp_get_attachment_image_src(get_post_thumbnail_id(), 'small'); ?>
         <div class="card__image">
             <div class="image-container" style="background-image: url('<?php echo $dogImage[0]; ?>')"></div>

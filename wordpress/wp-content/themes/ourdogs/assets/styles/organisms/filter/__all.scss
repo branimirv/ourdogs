@@ -5,5 +5,16 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        @include mq($until: desktop) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        label {
+            @include mq($until: desktop) {
+                margin-bottom: calc(#{$unit} * 4);
+            }
+        }
     }
 }

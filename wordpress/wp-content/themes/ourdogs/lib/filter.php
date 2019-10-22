@@ -1,68 +1,30 @@
 <?php
 
 function filter_dogs () {
-    $allergies = $_POST['allergies'];
-    $breed = $_POST['breed'];
-
-    $breed_tax_args = [];
-    $allergies_meta_args = [];
-    
-    switch ($breed) {
-        case $breed:
-            $breed_tax_args = [
-                array(
-                    array(
-                        'taxonomy' => 'breed',
-                        'field' => 'id',
-                        'terms' => $_POST['breed']
-                    )
-            
-                )
-            ];
-            
-            break;
-
-        case 0:
-            $breed_tax_args = [
-                array(
-                    array(
-                        'taxonomy' => 'breed',
-                    )
-                )
-            ];
-
-            break;
-    }
-
-    switch ($allergies) {
-        case 'on':
-            $allergies_meta_args = [
-                array(
-                    'key' => 'food_allergies',
-                    'value'   => '',
-                    'compare' => '!='
-                )
-            ];
-
-            break;
-        case 0:
-            $allergies_meta_args = [
-                array(
-                    'key' => 'food_allergies',
-                    'value'   => '',
-                    'compare' => '='
-                )
-            ];
-
-            break;
-    }
-    
-
     $args = array(
         'post_type' => 'dog',
-        'tax_query' => $breed_tax_args,
-        'meta_query' => $allergies_meta_args,
+        'tax_query' => array(),
+        'meta_query' => array(),
     );
+
+
+    if( isset( $_POST['allergies'] ) && $_POST['allergies'] == 'on' )
+        $args['meta_query'][] = array(
+            array(
+                'key' => 'food_allergies',
+                'value'   => array(''),
+                'compare' => 'NOT IN'
+            )
+        );
+
+	if( isset( $_POST['breed'] ) && !empty( $_POST['breed'] ) )
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'breed',
+                'field' => 'id',
+                'terms' => $_POST['breed']
+            )
+        );
 
     $query = new WP_Query( $args );
 
